@@ -32,15 +32,15 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({ locale }) => {
   }
 }
 
-  sslogin({
-    isLoggedIn() {
-      return localStorage.getItem('MBMAccount')
-    },
-    handleAccount(account: any) {
-      console.log('account', account);
-      localStorage.setItem('MBMAccount',JSON.stringify(account));
-    },
-  });
+sslogin({
+  isLoggedIn() {
+    return !!localStorage.getItem('MBMAccount')
+  },
+  handleAccount(account: any) {
+    console.log('account', account)
+    localStorage.setItem('MBMAccount', JSON.stringify(account))
+  },
+})
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('')

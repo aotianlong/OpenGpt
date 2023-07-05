@@ -8,6 +8,7 @@ import { Logo } from '@/components/Logo'
 import { NavLink } from '@/components/NavLink'
 import { useTranslation } from 'next-i18next'
 import { LanguageSelector } from './LanguageSelector'
+import logo from '@/images/mbmlogo-dark.png'
 
 function MobileNavLink({
   href,
@@ -64,23 +65,10 @@ const useHeaders = () => {
     useMemo(
       () => [
         {
-          href: 'https://github.com/futantan/OpenGpt',
-          label: '⭐️ Star on GitHub',
+          href: 'https://openai.mbmzone.com',
+          label: '⭐️ MBM OpenAI',
           target: '_blank',
         },
-        { href: '/usage', label: '💸 Usage' },
-        {
-          href: 'https://l5oj8ohzdp.feishu.cn/share/base/form/shrcnqfgna9DRRNsEy3rRaqiJCf',
-          label: '🔥 ' + t('give_feedack'),
-          target: '_blank',
-        },
-        {
-          href: 'https://b.jimmylv.cn?ref=opengpt',
-          label: t('bibigpt'),
-          target: '_blank',
-        },
-        // { href: '#testimonials', label: '用户评价' },
-        // { href: '#pricing', label: '价格' },
       ],
       [t]
     )
@@ -145,7 +133,7 @@ export function Header() {
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
             <Link href="/" aria-label="Home">
-              <Logo className="h-10 w-auto" />
+              <img src={logo.src} className="h-10 w-auto" />
             </Link>
             <div className="hidden md:flex md:gap-x-6">
               {HEADER_LINKS.map(({ href, label, target }) => (
