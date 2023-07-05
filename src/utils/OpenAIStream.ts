@@ -36,7 +36,9 @@ export async function OpenAIStream(
 
   let counter = 0
 
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+  const openai_api_url = process.env.OPENAI_API_URL || 'https://api.openai.com'
+
+  const res = await fetch(`${openai_api_url}/v1/chat/completions`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${openAIKey}`,
