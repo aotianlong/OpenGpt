@@ -12,6 +12,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import * as R from 'ramda'
 import { useState } from 'react'
+import { sslogin } from '@/mbm/login'
 
 type App = {
   id: string
@@ -30,6 +31,16 @@ export const getStaticProps: GetStaticProps<PageProps> = async ({ locale }) => {
     // revalidate: 120, // In seconds
   }
 }
+
+  sslogin({
+    isLoggedIn() {
+      return localStorage.getItem('MBMAccount')
+    },
+    handleAccount(account: any) {
+      console.log('account', account);
+      localStorage.setItem('MBMAccount',JSON.stringify(account));
+    },
+  });
 
 const Home = () => {
   const [searchValue, setSearchValue] = useState('')
