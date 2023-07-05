@@ -75,11 +75,11 @@ export async function OpenAIStream(
           try {
             const json = JSON.parse(data)
             const text = json.choices[0].delta?.content || ''
-	    const finish_reason = json.choices[0].finish_reason
-	    if (finish_reason) {
-		    controller.close();
-		    return
-	    }
+            const finish_reason = json.choices[0].finish_reason
+            if (finish_reason) {
+              controller.close()
+              return
+            }
             if (counter < 2 && (text.match(/\n/) || []).length) {
               // this is a prefix character (i.e., "\n\n"), do nothing
               return

@@ -14,9 +14,8 @@ export const useGenerateResult = () => {
   async function generate(body: GenerateApiInput) {
     setGeneratedResults('')
 
-
     // 从localstorage中获取accesskey
-    const mbmAccount = JSON.parse(localStorage.getItem('MBMAccount') || '{}');
+    const mbmAccount = JSON.parse(localStorage.getItem('MBMAccount') || '{}')
 
     const response = await fetch('/api/generate', {
       method: 'POST',
@@ -24,7 +23,7 @@ export const useGenerateResult = () => {
       body: JSON.stringify({
         ...body,
         userKey: loadLicenseKey(),
-	accessKey: mbmAccount?.accessKey
+        accessKey: mbmAccount?.accessKey,
       }),
     })
 
