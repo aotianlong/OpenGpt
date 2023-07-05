@@ -20,41 +20,7 @@ export default async function middleware(
   request: NextRequest,
   event: NextFetchEvent
 ): Promise<Response | undefined> {
-  const { userKey } = (await request.json()) as GenerateApiInput
-
-  if (userKey) {
-    console.log('user is using license key')
-    const { isValid } = await validateLicenseKey(userKey)
-    if (!isValid) {
-      return runOutOfRatelimit(439)
-    }
-    return NextResponse.next()
-  }
-
-  if (isDev) {
-    return NextResponse.next()
-  }
-
-  // 👇 below only works for production
-
-  const ipIdentifier = request.ip ?? '127.0.0.1'
-  console.log('ip is trying to use ->', ipIdentifier)
-  const { success, limit, reset, remaining, pending } = await ratelimit.limit(
-    `ratelimit_middleware_${ipIdentifier}`
-  )
-  event.waitUntil(pending)
-
-  console.log(`ip free user ${ipIdentifier}, remaining: ${remaining}`)
-  if (!success) {
-    return runOutOfRatelimit(429)
-  } else {
-    const res = NextResponse.next()
-    res.headers.set('X-RateLimit-Limit', limit.toString())
-    res.headers.set('X-RateLimit-Remaining', remaining.toString())
-    res.headers.set('X-RateLimit-Reset', reset.toString())
-
-    return res
-  }
+  return NextResponse.next()
 }
 
 function runOutOfRatelimit(errorCode: number) {
