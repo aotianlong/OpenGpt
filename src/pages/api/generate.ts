@@ -21,7 +21,8 @@ const handler = async (req: NextRequest): Promise<Response> => {
     prompt: testPrompt,
     id,
     userKey,
-  } = (await req.json()) as GenerateApiInput
+    accessKey,
+  } = (await req.json()) as GenerateApiInput & { accessKey: string }
 
   if (!testPrompt && !id) {
     console.log('No prompt or id in the request')
@@ -57,9 +58,13 @@ const handler = async (req: NextRequest): Promise<Response> => {
   }
 
   async function execute(currentRetryTimes: number): Promise<any> {
+    /*
     let openAIKey = userKey
       ? await selectAPaidKey(userKey)
       : randomChooseFromApiToken({ isPaid: false })
+    */
+
+    let openAIKey = accessKey
 
     try {
       const stream = await OpenAIStream(payload, openAIKey, userKey)
